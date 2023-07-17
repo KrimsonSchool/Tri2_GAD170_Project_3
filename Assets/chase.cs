@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class chase : MonoBehaviour
 {
+    public float speed;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +14,6 @@ public class chase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.position += transform.right * Time.deltaTime * speed;
     }
 }

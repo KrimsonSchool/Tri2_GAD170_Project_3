@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public float mouseSpeed;
     Rigidbody rb;
 
+    bool canJump;
     bool jumping;
     float jumpTimer;
     // Start is called before the first frame update
@@ -27,7 +28,7 @@ public class Player : MonoBehaviour
 
         transform.Rotate(0, Input.GetAxis("Mouse X") * mouseSpeed, 0);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && canJump)
         {
             jumping = true;
         }
@@ -46,7 +47,17 @@ public class Player : MonoBehaviour
             {
                 jumpTimer = 0;
                 jumping = false;
+
+                canJump = false;
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Ground")
+        {
+            canJump = true;
         }
     }
 }
