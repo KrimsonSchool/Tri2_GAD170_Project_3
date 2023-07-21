@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -28,6 +29,15 @@ public class Player : MonoBehaviour
 
         transform.Rotate(0, Input.GetAxis("Mouse X") * mouseSpeed, 0);
 
+        if(Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+        {
+            GetComponent<Animator>().SetBool("Running", true);
+        }
+        if(Input.GetAxis("Vertical") == 0 && Input.GetAxis("Horizontal") == 0)
+        {
+            GetComponent<Animator>().SetBool("Running", false);
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) && canJump)
         {
             jumping = true;
@@ -41,6 +51,7 @@ public class Player : MonoBehaviour
 
         if (jumping)
         {
+            GetComponent<Animator>().SetBool("Jumping", true);
             jumpTimer += Time.deltaTime;
 
             if (jumpTimer >= 0.25f)
@@ -51,6 +62,10 @@ public class Player : MonoBehaviour
                 canJump = false;
             }
         }
+        else
+        {
+            GetComponent<Animator>().SetBool("Jumping", false);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,6 +73,16 @@ public class Player : MonoBehaviour
         if(other.tag == "Ground")
         {
             canJump = true;
+        }
+
+        if(other.tag == "Death")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        if(other.tag == "Gem")
+        {
+            Destroy(other.gameObject);
         }
     }
 }
