@@ -37,6 +37,15 @@ public class Elevator : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, startPos, Time.deltaTime * speed);
         }
 
+        if(transform.position == startPos)
+        {
+            meshRenderer.material = defaultMat;
+        }
+        else
+        {
+            meshRenderer.material = altMat;
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
