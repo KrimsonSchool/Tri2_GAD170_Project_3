@@ -26,7 +26,6 @@ public class Player : MonoBehaviour
         {
             PlayerPrefs.SetInt("Gems", 0);
             PlayerPrefs.SetInt("Xero", 0);
-            PlayerPrefs.SetInt("First", 1);
         }
     }
 
@@ -100,7 +99,7 @@ public class Player : MonoBehaviour
 
         if(other.tag == "Gem")
         {
-
+            PlayerPrefs.SetInt("First", 1);
             PlayerPrefs.SetInt("Gems", PlayerPrefs.GetInt("Gems") + 1);
             PlayerPrefs.SetInt("obj" + other.gameObject.transform.position, 1);
             Destroy(other.gameObject);
@@ -108,6 +107,7 @@ public class Player : MonoBehaviour
 
         if(other.tag == "Xero")
         {
+            PlayerPrefs.SetInt("First", 1);
             PlayerPrefs.SetInt("Xero", PlayerPrefs.GetInt("Xero") + 1);
             PlayerPrefs.SetInt("obj" + other.gameObject.transform.position, 1);
             Destroy(other.gameObject);
@@ -129,7 +129,7 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.E))
             {
-                other.gameObject.transform.position += other.gameObject.transform.up * 10;
+                other.gameObject.GetComponent<Door>().open = !other.gameObject.GetComponent<Door>().open;
             }
         }
     }
