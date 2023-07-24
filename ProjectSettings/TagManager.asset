@@ -9,6 +9,8 @@ TagManager:
   - Gem
   - Elevator
   - Xero
+  - Tutor
+  - Door
   layers:
   - Default
   - TransparentFX

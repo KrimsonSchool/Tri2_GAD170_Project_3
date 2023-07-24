@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,6 +21,13 @@ public class Player : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         rb = GetComponent<Rigidbody>();
+
+        if(PlayerPrefs.GetInt("First") != 1)
+        {
+            PlayerPrefs.SetInt("Gems", 0);
+            PlayerPrefs.SetInt("Xero", 0);
+            PlayerPrefs.SetInt("First", 1);
+        }
     }
 
     // Update is called once per frame
@@ -66,6 +74,16 @@ public class Player : MonoBehaviour
         {
             GetComponent<Animator>().SetBool("Jumping", false);
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            PlayerPrefs.SetInt("First", 0);
+        }
+
+        if(transform.position.y <= -5)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -82,7 +100,37 @@ public class Player : MonoBehaviour
 
         if(other.tag == "Gem")
         {
+
+            PlayerPrefs.SetInt("Gems", PlayerPrefs.GetInt("Gems") + 1);
+            PlayerPrefs.SetInt("obj" + other.gameObject.transform.position, 1);
             Destroy(other.gameObject);
+        }
+
+        if(other.tag == "Xero")
+        {
+            PlayerPrefs.SetInt("Xero", PlayerPrefs.GetInt("Xero") + 1);
+            PlayerPrefs.SetInt("obj" + other.gameObject.transform.position, 1);
+            Destroy(other.gameObject);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Tutor")
+        {
+            Destroy(collision.gameObject);
+            FindObjectOfType<TutorialManager>().tutorial += 1;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.tag == "Door")
+        {
+            if (Input.GetKey(KeyCode.E))
+            {
+                other.gameObject.transform.position += other.gameObject.transform.up * 10;
+            }
         }
     }
 }
