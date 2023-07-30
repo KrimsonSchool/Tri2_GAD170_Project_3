@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            agent.destination = new Vector3(transform.position.x + Random.Range(-wanderRange, wanderRange), transform.position.y, transform.position.z + Random.Range(-wanderRange, wanderRange));
+            agent.destination = new Vector3(transform.position.x + UnityEngine.Random.Range(-wanderRange, wanderRange), transform.position.y, transform.position.z + UnityEngine.Random.Range(-wanderRange, wanderRange));
         }
     }
 }
