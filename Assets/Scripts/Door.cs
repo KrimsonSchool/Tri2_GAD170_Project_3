@@ -22,5 +22,9 @@ public class Door : MonoBehaviour
         {
             transform.position += transform.up * Time.deltaTime * speed;
         }
+        if (!open && transform.position.y > startPos)
+        {
+            transform.position += -transform.up * Time.deltaTime * speed;
+        }
     }
 }
