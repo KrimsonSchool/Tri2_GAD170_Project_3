@@ -61,9 +61,10 @@ public class Enemy : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            if(timer >= 5)
+            if(timer >= 15)
             {
                 seenPlayer = false;
+                timer = 0;
             }
         }
     }
