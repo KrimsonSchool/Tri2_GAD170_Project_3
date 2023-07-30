@@ -11,6 +11,7 @@ TagManager:
   - Xero
   - Tutor
   - Door
+  - Weak
   layers:
   - Default
   - TransparentFX

@@ -112,6 +112,13 @@ public class Player : MonoBehaviour
             PlayerPrefs.SetInt("obj" + other.gameObject.transform.position, 1);
             Destroy(other.gameObject);
         }
+
+        if(other.tag == "Weak")
+        {
+            Destroy(other.gameObject.GetComponentInParent<Enemy>().gameObject);
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            transform.position += transform.up * jumpSpeed * Time.deltaTime;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
