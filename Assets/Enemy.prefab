@@ -262,6 +262,7 @@ GameObject:
   - component: {fileID: 4368268803832802195}
   - component: {fileID: 6589049286723582154}
   - component: {fileID: 4033743876841750183}
+  - component: {fileID: -8430212567466728844}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Death
@@ -366,6 +367,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.0634911
   m_Center: {x: 0, y: 1.0523362, z: -0}
+--- !u!114 &-8430212567466728844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016827605228586635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 272257387ffc7c44f8bc9720384d3aa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1500110934374221696
 GameObject:
   m_ObjectHideFlags: 0

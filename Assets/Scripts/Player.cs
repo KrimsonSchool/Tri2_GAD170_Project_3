@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     bool canJump;
     bool jumping;
     float jumpTimer;
+
+    public GameObject gem;
+    public GameObject splode;
     // Start is called before the first frame update
     void Start()
     {
@@ -77,9 +80,10 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             PlayerPrefs.SetInt("First", 0);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-        if(transform.position.y <= -5)
+        if (transform.position.y <= -5)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
@@ -101,7 +105,7 @@ public class Player : MonoBehaviour
         {
             PlayerPrefs.SetInt("First", 1);
             PlayerPrefs.SetInt("Gems", PlayerPrefs.GetInt("Gems") + 1);
-            PlayerPrefs.SetInt("obj" + other.gameObject.transform.position, 1);
+            PlayerPrefs.SetInt("obj" + other.transform.position, 1);
             Destroy(other.gameObject);
         }
 
@@ -109,15 +113,18 @@ public class Player : MonoBehaviour
         {
             PlayerPrefs.SetInt("First", 1);
             PlayerPrefs.SetInt("Xero", PlayerPrefs.GetInt("Xero") + 1);
-            PlayerPrefs.SetInt("obj" + other.gameObject.transform.position, 1);
+            PlayerPrefs.SetInt("obj" + other.transform.position, 1);
             Destroy(other.gameObject);
         }
 
         if(other.tag == "Weak")
         {
+            PlayerPrefs.SetInt("obj" + other.gameObject.GetComponentInParent<Enemy>().ogPos, 1);
+            Instantiate(splode, other.gameObject.transform.position + other.gameObject.transform.up * 1.5f, Quaternion.identity);
+            Instantiate(gem, other.gameObject.transform.position, Quaternion.identity);
             Destroy(other.gameObject.GetComponentInParent<Enemy>().gameObject);
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            transform.position += transform.up * jumpSpeed * Time.deltaTime;
+            transform.position += transform.up * jumpSpeed * Time.deltaTime * 5;
         }
     }
 

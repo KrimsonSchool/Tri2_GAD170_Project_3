@@ -670,6 +670,8 @@ MonoBehaviour:
   speed: 10
   jumpSpeed: 15
   mouseSpeed: 5
+  gem: {fileID: 3934431342633658746, guid: 28ad68d130a2c2f4b9ce84f877461bf1, type: 3}
+  splode: {fileID: 5461736272076728431, guid: 41345447a84a7474f9212a2c81c6f2c2, type: 3}
 --- !u!95 &783170113501079620
 Animator:
   serializedVersion: 5
