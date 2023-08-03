@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
 
     public GameObject gem;
     public GameObject splode;
+    public AudioSource audioSourcePop;
+    public AudioSource audioSourceJump;
+    public AudioSource audioSourceExplode;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +54,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && canJump)
         {
             jumping = true;
+            audioSourceJump.Play();
         }
 
         if (Input.GetKey(KeyCode.Space) && jumping)
@@ -107,6 +111,7 @@ public class Player : MonoBehaviour
             PlayerPrefs.SetInt("Gems", PlayerPrefs.GetInt("Gems") + 1);
             PlayerPrefs.SetInt("obj" + other.transform.position, 1);
             Destroy(other.gameObject);
+            audioSourcePop.Play();
         }
 
         if(other.tag == "Xero")
@@ -125,6 +130,7 @@ public class Player : MonoBehaviour
             Destroy(other.gameObject.GetComponentInParent<Enemy>().gameObject);
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             transform.position += transform.up * jumpSpeed * Time.deltaTime * 5;
+            audioSourceExplode.Play();
         }
     }
 

@@ -15,6 +15,7 @@ public class Tile : MonoBehaviour
         {
             faller = true;
             GetComponent<MeshRenderer>().material = fallMat;
+            tag = "Untagged";
         }
     }
 
