@@ -132,6 +132,11 @@ public class Player : MonoBehaviour
             transform.position += transform.up * jumpSpeed * Time.deltaTime * 5;
             audioSourceExplode.Play();
         }
+
+        if(other.tag == "BossStart")
+        {
+            FindAnyObjectByType<Boss>().started = true;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

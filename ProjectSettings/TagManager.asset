@@ -12,6 +12,7 @@ TagManager:
   - Tutor
   - Door
   - Weak
+  - BossStart
   layers:
   - Default
   - TransparentFX
