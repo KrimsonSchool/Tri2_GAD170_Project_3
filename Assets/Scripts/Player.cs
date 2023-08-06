@@ -91,6 +91,11 @@ public class Player : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            transform.position = new Vector3(90, 71, 22.5f);
+        } 
     }
 
     private void OnTriggerEnter(Collider other)
@@ -120,6 +125,7 @@ public class Player : MonoBehaviour
             PlayerPrefs.SetInt("Xero", PlayerPrefs.GetInt("Xero") + 1);
             PlayerPrefs.SetInt("obj" + other.transform.position, 1);
             Destroy(other.gameObject);
+            audioSourcePop.Play();
         }
 
         if(other.tag == "Weak")
@@ -136,6 +142,15 @@ public class Player : MonoBehaviour
         if(other.tag == "BossStart")
         {
             FindAnyObjectByType<Boss>().started = true;
+        }
+
+        if(other.tag == "PowerUp")
+        {
+            jumpSpeed *= 1.5f;
+            Destroy(other.gameObject);
+            audioSourceExplode.Play();
+            audioSourcePop.Play();
+            audioSourceJump.Play();
         }
     }
 
