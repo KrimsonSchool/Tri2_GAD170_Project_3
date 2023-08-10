@@ -6,21 +6,30 @@ public class Boss : MonoBehaviour
 {
     public bool started;
     public Animator animator;
-    int stage;
+    public int stage;
+    int lstage;
 
     public GameObject orbWideSpawn;
     public GameObject orbSingleSpawn;
 
     public GameObject orb;
+
+    public int health;
+
+    public GameObject win;
+
+    public TMPro.TextMeshPro healthText;
     // Start is called before the first frame update
     void Start()
     {
-        
+        health = 1000;
     }
 
     // Update is called once per frame
     void Update()
     {
+        healthText.text = health + "/1000 Hp";
+
         if (started)
         {
             animator.SetInteger("Stage", stage);
@@ -29,6 +38,12 @@ public class Boss : MonoBehaviour
             {
                 stage = 1;
             }
+        }
+
+        if(health <= 0)
+        {
+            win.SetActive(true);
+            Destroy(gameObject);
         }
     }
 
@@ -41,6 +56,17 @@ public class Boss : MonoBehaviour
     public void StageDown()
     {
         stage -= 1;
+    }
+
+    public void RandomStage()
+    {
+        lstage = stage;
+        stage = Random.Range(2, 5);
+
+        if(stage == lstage)
+        {
+            RandomStage();
+        }
     }
 
     public void OrbsWide()
@@ -71,5 +97,14 @@ public class Boss : MonoBehaviour
     public void OrbsSingle()
     {
         Instantiate(orb, orbSingleSpawn.transform.position, transform.rotation);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Bullet")
+        {
+            Destroy(other.gameObject);
+            health -= 1;
+        }
     }
 }

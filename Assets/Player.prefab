@@ -678,6 +678,7 @@ MonoBehaviour:
   audioSourcePop: {fileID: -2442922674934111812}
   audioSourceJump: {fileID: 2943713634900205172}
   audioSourceExplode: {fileID: -2508281887051617364}
+  bullet: {fileID: 2821961526341043087, guid: 464f226b09c3136499760a8e5f310cb4, type: 3}
 --- !u!95 &783170113501079620
 Animator:
   serializedVersion: 5
