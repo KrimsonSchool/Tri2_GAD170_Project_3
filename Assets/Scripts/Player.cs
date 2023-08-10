@@ -113,16 +113,21 @@ public class Player : MonoBehaviour
             GetComponent<Animator>().SetBool("Jumping", false);
         }
 
-        //DEBUG SCRIPTS, IGNORE//
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            PlayerPrefs.SetInt("First", 0);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            transform.position = new Vector3(90, 71, 22.5f);
-        }
+        //DEBUG SCRIPTS, IGNORE//\
+
+        //resets saves and respawns
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    PlayerPrefs.SetInt("First", 0);
+        //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //}
+
+        //teleports the player to the boss fight
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    transform.position = new Vector3(90, 71, 22.5f);
+        //}
+
         //DEBUG SCRIPTS, IGNORE
 
 
@@ -146,79 +151,128 @@ public class Player : MonoBehaviour
         }
     }
 
+    //called when the player enters a trigger
     private void OnTriggerEnter(Collider other)
     {
+        //if the trigger's tag is ground then
         if(other.tag == "Ground")
         {
+            //set canJump to true
             canJump = true;
         }
 
+        //if the trigger's tag is death then
         if(other.tag == "Death")
         {
+            //reload the scene (the player has died)
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
+        //if the trigger's tag is gem then
         if(other.tag == "Gem")
         {
+            //set first to 1
             PlayerPrefs.SetInt("First", 1);
+            //add 1 to the gems variable
             PlayerPrefs.SetInt("Gems", PlayerPrefs.GetInt("Gems") + 1);
+            //save that that gem has been collected
             PlayerPrefs.SetInt("obj" + other.transform.position, 1);
+            //delete the object
             Destroy(other.gameObject);
+            //play the pop sound effect
             audioSourcePop.Play();
+            //print that the player has gained a gem
+            print("You gained a gem!!!");
         }
 
+        //if the trigger's tag is xero then
         if(other.tag == "Xero")
         {
+            //set first to 1
             PlayerPrefs.SetInt("First", 1);
+            //add 1 to the xero variable
             PlayerPrefs.SetInt("Xero", PlayerPrefs.GetInt("Xero") + 1);
+            //save that the xero has been collected
             PlayerPrefs.SetInt("obj" + other.transform.position, 1);
+            //delete the object
             Destroy(other.gameObject);
+            //play the pop sound effect
             audioSourcePop.Play();
+            //print that the player has gained a xero
+            print("You gained a xero!!!");
         }
 
+        //if the trigger's tag is weak then
         if(other.tag == "Weak")
         {
+            //save that the enemy has been killed
             PlayerPrefs.SetInt("obj" + other.gameObject.GetComponentInParent<Enemy>().ogPos, 1);
+            //spawn the enemy death explosion particle effect
             Instantiate(splode, other.gameObject.transform.position + other.gameObject.transform.up * 1.5f, Quaternion.identity);
+            //spawn a gem at the enemies location
             Instantiate(gem, other.gameObject.transform.position, Quaternion.identity);
+            //delete the enemy
             Destroy(other.gameObject.GetComponentInParent<Enemy>().gameObject);
+            //set the player's y velocity to 0
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            //move the player up on the y axis 5 times their jump speed variable
             transform.position += transform.up * jumpSpeed * Time.deltaTime * 5;
+            //play the explosion sound effect
             audioSourceExplode.Play();
+            //print that the player has killed an enemy
+            print("You kill an enemy!");
         }
 
+        //if the trigger's tag is BossStart then
         if(other.tag == "BossStart")
         {
+            //set the boss's started variable to true
             FindAnyObjectByType<Boss>().started = true;
+            //print that the boss fight has started
+            print("The boss fight has started!!!");
         }
 
+        //if the trigger's tag is PowerUp then
         if(other.tag == "PowerUp")
         {
+            //set the players speed to be 1.5 times its amount
             jumpSpeed *= 1.5f;
+            //delete the object
             Destroy(other.gameObject);
+            //play the explosion sound effect
             audioSourceExplode.Play();
-            audioSourcePop.Play();
-            audioSourceJump.Play();
+            //set the canshoot variable to true
             canShoot = true;
+            //destroy the wall blocking the boss fight
             Destroy(wall.gameObject);
+            //print that the player can press the left mouse button to shoot
+            print("Press the Left mouse button to shoot");
         }
     }
 
+    //called when the player collides with an object
     private void OnCollisionEnter(Collision collision)
     {
+        //if the collided objects tag is tutor then
         if(collision.gameObject.tag == "Tutor")
         {
+            //delete the object
             Destroy(collision.gameObject);
+            //add 1 to the tutorial variable
             FindObjectOfType<TutorialManager>().tutorial += 1;
         }
     }
 
+    //called when the player stays within a trigger
     private void OnTriggerStay(Collider other)
     {
+        //if the trigger's tag is door then
         if(other.tag == "Door")
         {
+            //if the player presses the E key then
             if (Input.GetKeyDown(KeyCode.E))
             {
+                //set the doors open status to the opposite of its current value (true -> false | false -> true)
                 other.gameObject.GetComponent<Door>().open = !other.gameObject.GetComponent<Door>().open;
             }
         }
